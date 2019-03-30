@@ -1,0 +1,12 @@
+/****** PLACE YOUR CUSTOM STYLES HERE ******/
+.center-align {
+    text-align: center;
+}
+
+.no-wrap{
+    text-align: center;
+}
+
+.white-font{
+    color: white;
+}

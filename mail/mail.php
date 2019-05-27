@@ -20,7 +20,7 @@ $sendingAccountUsername     = 'blueitcc@gmail.com';
 $sendingAccountPassword     = 'czwmkatrezxdbuao';
 
 // Recipient (To:) Details  - Change this to the email details of who will receive all the emails from the website.
-$recipientEmail             = 'felix.abreu@blueit.cc'; // REQUIRED value.
+$recipientEmail             = 'felix.noel.abreu@gmail.com'; // REQUIRED value.
 $recipientName              = 'Felix Abreu';             // REQUIRED value.
 
 // Email details            - Change these to suit your website needs

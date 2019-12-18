@@ -31,7 +31,7 @@ $(document).ready(function() {
         // overBase.classList.remove("base");
         // overFace.classList.remove("face");
         overLogo.style.display = "none";
-        body.classList.add("faded");
+        // body.classList.add("faded");
         body.removeAttribute('id');
       }, 3000);
 

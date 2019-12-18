@@ -448,7 +448,7 @@ a {
 }
 .image-bg a,
 .bg-primary a {
-  color: #47b475;
+  color: #1ed760;
 }
 .image-bg a:hover,
 .bg-primary a:hover {
@@ -456,7 +456,7 @@ a {
   opacity: .9;
 }
 .bg-light a {
-  color: #1db954;
+  color: #47b475;
 }
 .bg-light a:hover {
   color: #47b475;
@@ -793,9 +793,9 @@ footer.bg-dark li,
 .btn-white,
 .image-bg .btn,
 .image-bg .btn:visited {
-  color: #fff;
-  border-color: #1db954;
-  background-color: #1db954;
+  color: #000;
+  border-color: #000;
+  background-color: #1ed760;
 }
 .btn-white:hover,
 .image-bg .btn:hover,

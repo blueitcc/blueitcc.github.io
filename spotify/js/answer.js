@@ -2,18 +2,15 @@
 //     window.location.replace("lead.html");
 // }
 
-// Amor, Nights in the summer, Moonchild, dj no pare
-var songs = "7u5NNWvI3lNNnDogwG1fT6%2C1TxP219SsP0Bf6KoYbR538%2C1zP7krkgH9hStDqN6BU6dJ";
-
-var artists = ['2VSD3LzrDqqGCCIZ3VM6M1'];
-
+// si te vas, la isla, bellaquita remix, dj no pare
+var songs = "2krbTmRHxQkp42xB81CvHL";
+var artists = ['133sloClSbT0Y474SOcrcp'];
 
 var url_string = window.location.href; 
 var tokenIndex = url_string.indexOf("=");
 var tokenIndexEnd = url_string.indexOf("&");
 var accessToken= url_string.substring(tokenIndex + 1, tokenIndexEnd);
-var morUrbanoID = '6gj2Hetn3sUdNjJUr0kwn9';
-var morEnergiaID = '6LubGWUrGoAAdx7aw4vkGq';
+
 
 
 $(document).ready(function(){
@@ -21,15 +18,13 @@ $(document).ready(function(){
     var modal = document.getElementById("modal-click");
     var openApp = document.getElementById("openSpotify");
     checkFollowArtists();
-    followMorUrbano();
     followLatestTracks();
-    followMorEnergia();
     modal.click();
 
     setTimeout(function(){ 
         console.log("redirecting now");
         openApp.click();
-    }, 2000);
+    }, 5000);
 
 });
 
@@ -39,6 +34,7 @@ function followLatestTracks() {
     $.ajax({
         type: 'put',
         url: 'https://api.spotify.com/v1/me/tracks?ids=' + songs,
+        data: songs,
         headers: {
             'Authorization': 'Bearer ' + accessToken,
             'Content-Type': "application/json",
@@ -59,7 +55,7 @@ function checkFollowArtists() {
         
     $.ajax({
         type: 'get',
-        url: 'https://api.spotify.com/v1/me/following/contains?type=artist&ids=2VSD3LzrDqqGCCIZ3VM6M1',
+        url: 'https://api.spotify.com/v1/me/following/contains?type=artist&ids=14zUHaJZo1mnYtn6IBRaRP%2C77ziqFxp5gaInVrF2lj4ht%2C0KPX4Ucy9dk82uj4GpKesn%2C3fZk3Gm5dN5v5yfYMQ04Bx%2C2kqUKsTuEj1lPbm6BSn1AU%2C1Jt3lGxY5pqiWrh3cyIgwy',
         headers: {
             'Accept': "application/json",
             'Authorization': 'Bearer ' + accessToken,
@@ -82,7 +78,7 @@ function checkFollowArtists() {
             }
         }, 
         error: function(response) {
-            console.log("ERROR - Check Artist - Cyph");
+            console.log("ERROR - Check Artists");
             console.log(response);
         }
     });
@@ -101,52 +97,15 @@ function followArtist(artistIds) {
             'Content-Type': "application/json",
         },
         success: function(response) {
-            console.log("SUCCESS - Follow Artists - Cyph");
+            console.log("SUCCESS - Follow Artists");
             console.log(response);
         }, 
         error: function(response) {
-            console.log("ERROR - Follow Artists - Cyph");
+            console.log("ERROR - Follow Artists");
             console.log(response);
         }
     });
 
 }
 
-function followMorUrbano() {
-    
-    $.ajax({
-        type: 'put',
-        url: 'https://api.spotify.com/v1/playlists/' + morUrbanoID + '/followers',
-        headers: {
-            'Authorization': 'Bearer ' + accessToken,
-            'Content-Type': "application/json",
-        },
-        success: function(response) {
-            console.log("SUCCESS - MorUrbano - Cyph");
-            console.log(response);
-        }, 
-        error: function(response) {
-            console.log("ERROR - MorUrbano - Cyph");
-            console.log(response);
-        }
-    });
-}
 
-function followMorEnergia() {
-    $.ajax({
-        type: 'put',
-        url: 'https://api.spotify.com/v1/playlists/' + morEnergiaID + '/followers',
-        headers: {
-            'Authorization': 'Bearer ' + accessToken,
-            'Content-Type': "application/json",
-        },
-        success: function(response) {
-            console.log("SUCCESS - MorEnergia");
-            console.log(response);
-        }, 
-        error: function(response) {
-            console.log("ERROR - MorEnergia");
-            console.log(response);
-        }
-    });
-}

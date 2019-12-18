@@ -133,13 +133,20 @@ html,body
   overflow: hidden;
 }
 
-
-.body {
+.centered-rich{
   position: fixed;
   top: 50%;
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
+}
+
+.body {
+  position: absolute;
+  top: 40%;
+  margin-left: -70px;
+  left: 50%;
+
 }
 .body > span {
   height: 5px;
@@ -457,6 +464,12 @@ html,body
 .modal-event {
     opacity: 0;
     display: none;
+}
+
+@media screen and (max-width: 1005px) {
+  .openIt {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1080px) {

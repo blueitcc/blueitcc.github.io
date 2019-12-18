@@ -66,10 +66,10 @@ function checkFollowArtists() {
                 var toFollow = "";
                 response.forEach(function(artist, index) {  
                     if(!artist){
-                        if(index!=0) {
-                            toFollow = toFOllow + "%2C" + element;
+                        if(index!=0 && toFollow.length!=0) {
+                            toFollow = toFollow + "%2C" + artists[index];
                         } else {
-                            toFollow = toFollow + element;
+                            toFollow = toFollow + artists[index];
                         }
                 }})
                 if(toFollow.length > 0) {

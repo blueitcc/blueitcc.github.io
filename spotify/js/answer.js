@@ -55,7 +55,7 @@ function checkFollowArtists() {
         
     $.ajax({
         type: 'get',
-        url: 'https://api.spotify.com/v1/me/following/contains?type=artist&ids=14zUHaJZo1mnYtn6IBRaRP%2C77ziqFxp5gaInVrF2lj4ht%2C0KPX4Ucy9dk82uj4GpKesn%2C3fZk3Gm5dN5v5yfYMQ04Bx%2C2kqUKsTuEj1lPbm6BSn1AU%2C1Jt3lGxY5pqiWrh3cyIgwy',
+        url: 'https://api.spotify.com/v1/me/following/contains?type=artist&ids=133sloClSbT0Y474SOcrcp',
         headers: {
             'Accept': "application/json",
             'Authorization': 'Bearer ' + accessToken,

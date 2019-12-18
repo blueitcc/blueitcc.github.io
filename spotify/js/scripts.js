@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     setTimeout(function(){ 
         mainId.classList.remove("hide-main");
-        navId.classList.remove("hide-main");
+//         navId.classList.remove("hide-main");
         mainOver.classList.remove("body");
         // mainFazers.classList.remove("longfazers");
         // overBase.classList.remove("base");

@@ -8,8 +8,114 @@ var mr_firstSectionHeight,
     mr_floatingProjectSections,
     mr_scrollTop = 0;
 
+
+
+
+
 $(document).ready(function() { 
     "use strict";
+    var required = {
+        "entry_name": "entry_name",
+        "entry_email": "entry_email",
+    }
+
+    // $('input[type="checkbox"]').click(function(){
+    //     if($(this).prop("checked") == true){
+    //         console.log("Checkbox is checked.");
+    //         $('#submit-form').removeAttr('disabled');
+            
+    //     }
+    //     else if($(this).prop("checked") == false){
+    //         console.log("Checkbox is unchecked.");
+            
+    //         $('#submit-form').attr('disabled', 'disabled');
+    //     }
+    // });
+
+
+
+
+    $('input').keyup(function() {
+
+        var empty = 0;
+
+
+
+
+
+
+        $('input').each(function() {
+
+            var inputName = $(this).attr('name');
+            
+
+            // if(required[inputName]){
+            //     console.log("Check box input");
+            //     if($(this).prop("checked") == true){
+            //         console.log("Checkbox is checked.");
+            //         empty=true;
+            //     }
+            //     else if($(this).prop("checked") == false){
+            //         console.log("Checkbox is unchecked.");
+            //         empty=false;
+            //     }
+            // }
+
+
+            if($(this).val() == '') {
+                // if(required[inputName]){
+                //     empty = true;
+                // }
+                empty = 0;
+            } else{
+                empty++;
+            } 
+        });
+
+        if (empty < 2) {
+            $('#submit-form').attr('disabled', 'disabled'); // updated according to http://stackoverflow.com/questions/7637790/how-to-remove-disabled-attribute-with-jquery-ie
+        } else if(empty == 2) {
+            $('#submit-form').removeAttr('disabled'); // updated according to http://stackoverflow.com/questions/7637790/how-to-remove-disabled-attribute-with-jquery-ie
+        }
+    });
+  
+
+
+    var form = $('form#submission-form'),
+    url = 'https://script.google.com/macros/s/AKfycbyzTP7Lv0NSRfDkK3c2splqcvtdg7Cil7pOyTp9kfoYAtkeHPiL/exec'
+
+    
+$('#submit-form').on('click', function(e) {
+  e.preventDefault();
+
+	var inputNameVal = $('#entry_name').val();
+  	$('#entry_name').val('https://instagram.com/' + inputNameVal);
+  	
+
+  var jqxhr = $.ajax({
+    url: url,
+    method: "GET",
+    dataType: "json",
+    data: form.serializeObject()
+  }).success(function() {
+    $("#form-container").css("top", "40%");
+    $("#form-section").html( "<h3>¡Gracias por tu envío!</h3>" );
+
+    setTimeout(function() {
+        window.location.href = "https://www.youtube.com/watch?v=SR3DVWRwslU";
+    }, 2000);
+    
+
+  }).error(function() {
+    $("#form-container").css("top", "40%");
+    $("#form-section").html( "<h3>An error took place. Please contact the Rich Music team to address the issue.</h3>" );
+  });
+})
+    
+
+
+
+
 
     // Smooth scroll to inner links
         var innerLinks = $('a.inner-link');
@@ -53,17 +159,6 @@ $(document).ready(function() {
         $(this).css('background-position', 'initial');
     });
 
-    var fadings = $(".fading-out");
-    $(window).scroll(function(){  
-    var vpheight = document.documentElement.clientHeight;
-    fadings.each(function(){
-        var r = this.getBoundingClientRect();  
-        var thisHeight = $(this).height();
-        if(thisHeight + r.top < 0 || r.top > vpheight) return true;
-        var opacity = Math.max(0, Math.min(1, (r.top >= 0 ? vpheight - r.top : $(this).height() - Math.abs(r.top)) / vpheight));
-        $(this).css("opacity", opacity);
-        });  	       	
-    });
     // Fade in background images
 
     setTimeout(function() {
@@ -294,11 +389,10 @@ $(document).ready(function() {
     // Instagram Feed
     
     if($('.instafeed').length){
-
-        $.fn.spectragram.accessData = {
-            accessToken: '2883637898.25b8aeb.8f0a92a239fd44f2880e69000202e484',
-            clientID: '25b8aebabb2448c2ab00ef5fd15f2fa5'
-          };
+    	jQuery.fn.spectragram.accessData = {
+			accessToken: '1406933036.dc95b96.2ed56eddc62f41cbb22c1573d58625a2',
+			clientID: '87e6d2b8a0ef4c7ab8bc45e80ddd0c6a'
+		};	
 
         $('.instafeed').each(function() {
             var feedID = $(this).attr('data-user-name');
@@ -307,7 +401,9 @@ $(document).ready(function() {
                 max: 12
             });
         });
-    }
+    }   
+
+   
 
     // Flickr Feeds
 
@@ -726,249 +822,202 @@ $(document).ready(function() {
     //                                                            //
     //                                                            //
 
-    $('form.form-email, form.form-newsletter').submit(function(e) {
+    // $('form.form-email, form.form-newsletter').submit(function(e) {
 
-        // return false so form submits through jQuery rather than reloading page.
-        if (e.preventDefault) e.preventDefault();
-        else e.returnValue = false;
+    //     // return false so form submits through jQuery rather than reloading page.
+    //     if (e.preventDefault) e.preventDefault();
+    //     else e.returnValue = false;
 
-        var thisForm = $(this).closest('form.form-email, form.form-newsletter'),
-            submitButton = thisForm.find('button[type="submit"]'),
-            error = 0,
-            originalError = thisForm.attr('original-error'),
-            preparedForm, iFrame, userEmail, userFullName, userFirstName, userLastName, successRedirect, formError, formSuccess;
+    //     var thisForm = $(this).closest('form.form-email, form.form-newsletter'),
+    //         submitButton = thisForm.find('button[type="submit"]'),
+    //         error = 0,
+    //         originalError = thisForm.attr('original-error'),
+    //         preparedForm, iFrame, userEmail, userFullName, userFirstName, userLastName, successRedirect, formError, formSuccess;
 
-        // Mailchimp/Campaign Monitor Mail List Form Scripts
-        iFrame = $(thisForm).find('iframe.mail-list-form');
+    //     // Mailchimp/Campaign Monitor Mail List Form Scripts
+    //     iFrame = $(thisForm).find('iframe.mail-list-form');
 
-        thisForm.find('.form-error, .form-success').remove();
-        submitButton.attr('data-text', submitButton.text());
-        thisForm.append('<div class="form-error" style="display: none;">' + thisForm.attr('data-error') + '</div>');
-        thisForm.append('<div class="form-success" style="display: none;">' + thisForm.attr('data-success') + '</div>');
-        formError = thisForm.find('.form-error');
-        formSuccess = thisForm.find('.form-success');
-        thisForm.addClass('attempted-submit');
+    //     thisForm.find('.form-error, .form-success').remove();
+    //     submitButton.attr('data-text', submitButton.text());
+    //     thisForm.append('<div class="form-error" style="display: none;">' + thisForm.attr('data-error') + '</div>');
+    //     thisForm.append('<div class="form-success" style="display: none;">' + thisForm.attr('data-success') + '</div>');
+    //     formError = thisForm.find('.form-error');
+    //     formSuccess = thisForm.find('.form-success');
+    //     thisForm.addClass('attempted-submit');
 
-        // Do this if there is an iframe, and it contains usable Mail Chimp / Campaign Monitor iframe embed code
-        if ((iFrame.length) && (typeof iFrame.attr('srcdoc') !== "undefined") && (iFrame.attr('srcdoc') !== "")) {
+    //     // Do this if there is an iframe, and it contains usable Mail Chimp / Campaign Monitor iframe embed code
+    //     if ((iFrame.length) && (typeof iFrame.attr('srcdoc') !== "undefined") && (iFrame.attr('srcdoc') !== "")) {
 
-            console.log('Mail list form signup detected.');
-            if (typeof originalError !== typeof undefined && originalError !== false) {
-                formError.html(originalError);
-            }
-            userEmail = $(thisForm).find('.signup-email-field').val();
-            userFullName = $(thisForm).find('.signup-name-field').val();
-            if ($(thisForm).find('input.signup-first-name-field').length) {
-                userFirstName = $(thisForm).find('input.signup-first-name-field').val();
-            } else {
-                userFirstName = $(thisForm).find('.signup-name-field').val();
-            }
-            userLastName = $(thisForm).find('.signup-last-name-field').val();
+    //         console.log('Mail list form signup detected.');
+    //         if (typeof originalError !== typeof undefined && originalError !== false) {
+    //             formError.html(originalError);
+    //         }
+    //         userEmail = $(thisForm).find('.signup-email-field').val();
+    //         userFullName = $(thisForm).find('.signup-name-field').val();
+    //         if ($(thisForm).find('input.signup-first-name-field').length) {
+    //             userFirstName = $(thisForm).find('input.signup-first-name-field').val();
+    //         } else {
+    //             userFirstName = $(thisForm).find('.signup-name-field').val();
+    //         }
+    //         userLastName = $(thisForm).find('.signup-last-name-field').val();
 
-            // validateFields returns 1 on error;
-            if (validateFields(thisForm) !== 1) {
-                preparedForm = prepareSignup(iFrame);
+    //         // validateFields returns 1 on error;
+    //         if (validateFields(thisForm) !== 1) {
+    //             preparedForm = prepareSignup(iFrame);
 
-                preparedForm.find('#mce-EMAIL, #fieldEmail').val(userEmail);
-                preparedForm.find('#mce-LNAME, #fieldLastName').val(userLastName);
-                preparedForm.find('#mce-FNAME, #fieldFirstName').val(userFirstName);
-                preparedForm.find('#mce-NAME, #fieldName').val(userFullName);
-                thisForm.removeClass('attempted-submit');
+    //             preparedForm.find('#mce-EMAIL, #fieldEmail').val(userEmail);
+    //             preparedForm.find('#mce-LNAME, #fieldLastName').val(userLastName);
+    //             preparedForm.find('#mce-FNAME, #fieldFirstName').val(userFirstName);
+    //             preparedForm.find('#mce-NAME, #fieldName').val(userFullName);
+    //             thisForm.removeClass('attempted-submit');
 
-                // Hide the error if one was shown
-                formError.fadeOut(200);
-                // Create a new loading spinner in the submit button.
-                submitButton.html(jQuery('<div />').addClass('form-loading')).attr('disabled', 'disabled');
+    //             // Hide the error if one was shown
+    //             formError.fadeOut(200);
+    //             // Create a new loading spinner in the submit button.
+    //             submitButton.html(jQuery('<div />').addClass('form-loading')).attr('disabled', 'disabled');
                 
-                try{
-                    $.ajax({
-                        url: preparedForm.attr('action'),
-                        crossDomain: true,
-                        data: preparedForm.serialize(),
-                        method: "GET",
-                        cache: false,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        success: function(data){
-                            // Request was a success, what was the response?
-                            if (data.result != "success" && data.Status != 200) {
+    //             try{
+    //                 $.ajax({
+    //                     url: preparedForm.attr('action'),
+    //                     crossDomain: true,
+    //                     data: preparedForm.serialize(),
+    //                     method: "GET",
+    //                     cache: false,
+    //                     dataType: 'json',
+    //                     contentType: 'application/json; charset=utf-8',
+    //                     success: function(data){
+    //                         // Request was a success, what was the response?
+    //                         if (data.result != "success" && data.Status != 200) {
                                 
-                                // Error from Mail Chimp or Campaign Monitor
+    //                             // Error from Mail Chimp or Campaign Monitor
 
-                                // Keep the current error text in a data attribute on the form
-                                formError.attr('original-error', formError.text());
-                                // Show the error with the returned error text.
-                                formError.html(data.msg).fadeIn(1000);
-                                formSuccess.fadeOut(1000);
+    //                             // Keep the current error text in a data attribute on the form
+    //                             formError.attr('original-error', formError.text());
+    //                             // Show the error with the returned error text.
+    //                             formError.html(data.msg).fadeIn(1000);
+    //                             formSuccess.fadeOut(1000);
 
-                                submitButton.html(submitButton.attr('data-text')).removeAttr('disabled');
-                            } else {
+    //                             submitButton.html(submitButton.attr('data-text')).removeAttr('disabled');
+    //                         } else {
                                 
-                                // Got Success from Mail Chimp
+    //                             // Got Success from Mail Chimp
                                 
-                                submitButton.html(submitButton.attr('data-text')).removeAttr('disabled');
+    //                             submitButton.html(submitButton.attr('data-text')).removeAttr('disabled');
 
-                                successRedirect = thisForm.attr('success-redirect');
-                                // For some browsers, if empty `successRedirect` is undefined; for others,
-                                // `successRedirect` is false.  Check for both.
-                                if (typeof successRedirect !== typeof undefined && successRedirect !== false && successRedirect !== "") {
-                                    window.location = successRedirect;
-                                }
+    //                             successRedirect = thisForm.attr('success-redirect');
+    //                             // For some browsers, if empty `successRedirect` is undefined; for others,
+    //                             // `successRedirect` is false.  Check for both.
+    //                             if (typeof successRedirect !== typeof undefined && successRedirect !== false && successRedirect !== "") {
+    //                                 window.location = successRedirect;
+    //                             }
 
-                                thisForm.find('input[type="text"]').val("");
-                                thisForm.find('textarea').val("");
-                                formSuccess.fadeIn(1000);
+    //                             thisForm.find('input[type="text"]').val("");
+    //                             thisForm.find('textarea').val("");
+    //                             formSuccess.fadeIn(1000);
 
-                                formError.fadeOut(1000);
-                                setTimeout(function() {
-                                    formSuccess.fadeOut(500);
-                                }, 5000);
-                            }
-                        }
-                    });
-                }catch(err){
-                    // Keep the current error text in a data attribute on the form
-                    formError.attr('original-error', formError.text());
-                    // Show the error with the returned error text.
-                    formError.html(err.message).fadeIn(1000);
-                    formSuccess.fadeOut(1000);
-                    setTimeout(function() {
-                        formError.fadeOut(500);
-                    }, 5000);
+    //                             formError.fadeOut(1000);
+    //                             setTimeout(function() {
+    //                                 formSuccess.fadeOut(500);
+    //                             }, 5000);
+    //                         }
+    //                     }
+    //                 });
+    //             }catch(err){
+    //                 // Keep the current error text in a data attribute on the form
+    //                 formError.attr('original-error', formError.text());
+    //                 // Show the error with the returned error text.
+    //                 formError.html(err.message).fadeIn(1000);
+    //                 formSuccess.fadeOut(1000);
+    //                 setTimeout(function() {
+    //                     formError.fadeOut(500);
+    //                 }, 5000);
 
-                    submitButton.html(submitButton.attr('data-text')).removeAttr('disabled');
-                }
+    //                 submitButton.html(submitButton.attr('data-text')).removeAttr('disabled');
+    //             }
             
 
                 
-            } else {
-                formError.fadeIn(1000);
-                setTimeout(function() {
-                    formError.fadeOut(500);
-                }, 5000);
-            }
-        } else {
-            // If no iframe detected then this is treated as an email form instead.
-            console.log('Send email form detected.');
-            if (typeof originalError !== typeof undefined && originalError !== false) {
-                formError.text(originalError);
-            }
+    //         } else {
+    //             formError.fadeIn(1000);
+    //             setTimeout(function() {
+    //                 formError.fadeOut(500);
+    //             }, 5000);
+    //         }
+    //     } else {
+    //         // If no iframe detected then this is treated as an email form instead.
+    //         console.log('Send email form detected.');
+    //         if (typeof originalError !== typeof undefined && originalError !== false) {
+    //             formError.text(originalError);
+    //         }
 
-            error = validateFields(thisForm);
+    //         error = validateFields(thisForm);
 
-            if (error === 1) {
-                formError.fadeIn(200);
-                setTimeout(function() {
-                    formError.fadeOut(500);
-                }, 3000);
-            } else {
+    //         if (error === 1) {
+    //             formError.fadeIn(200);
+    //             setTimeout(function() {
+    //                 formError.fadeOut(500);
+    //             }, 3000);
+    //         } else {
 
-                thisForm.removeClass('attempted-submit');
+    //             thisForm.removeClass('attempted-submit');
 
-                // Hide the error if one was shown
-                formError.fadeOut(200);
+    //             // Hide the error if one was shown
+    //             formError.fadeOut(200);
                 
-                // Create a new loading spinner in the submit button.
-                submitButton.html(jQuery('<div />').addClass('form-loading')).attr('disabled', 'disabled');
-
-                jQuery.ajax({
-                    type: "POST",
-                    url: "mail/mail.php",
-                    data: thisForm.serialize()+"&url="+window.location.href,
-                    success: function(response) {
-                        // Swiftmailer always sends back a number representing numner of emails sent.
-                        // If this is numeric (not Swift Mailer error text) AND greater than 0 then show success message.
-
-                        submitButton.html(submitButton.attr('data-text')).removeAttr('disabled');
-
-                        if ($.isNumeric(response)) {
-                            if (parseInt(response) > 0) {
-                                // For some browsers, if empty 'successRedirect' is undefined; for others,
-                                // 'successRedirect' is false.  Check for both.
-                                successRedirect = thisForm.attr('success-redirect');
-                                if (typeof successRedirect !== typeof undefined && successRedirect !== false && successRedirect !== "") {
-                                    window.location = successRedirect;
-                                }
+    //             // Create a new loading spinner in the submit button.
+    //             submitButton.html(jQuery('<div />').addClass('form-loading')).attr('disabled', 'disabled');
 
 
-                                thisForm.find('input[type="text"]').val("");
-                                thisForm.find('textarea').val("");
-                                thisForm.find('.form-success').fadeIn(1000);
+    //         }
+    //     }
+    //     return false;
+    // });
 
-                                formError.fadeOut(1000);
-                                setTimeout(function() {
-                                    formSuccess.fadeOut(500);
-                                }, 5000);
-                            }
-                        }
-                        // If error text was returned, put the text in the .form-error div and show it.
-                        else {
-                            // Keep the current error text in a data attribute on the form
-                            formError.attr('original-error', formError.text());
-                            // Show the error with the returned error text.
-                            formError.text(response).fadeIn(1000);
-                            formSuccess.fadeOut(1000);
-                        }
-                    },
-                    error: function(errorObject, errorText, errorHTTP) {
-                        // Keep the current error text in a data attribute on the form
-                        formError.attr('original-error', formError.text());
-                        // Show the error with the returned error text.
-                        formError.text(errorHTTP).fadeIn(1000);
-                        formSuccess.fadeOut(1000);
-                        submitButton.html(submitButton.attr('data-text')).removeAttr('disabled');
-                    }
-                });
-            }
-        }
-        return false;
-    });
+    // $('.validate-required, .validate-email').on('blur change', function() {
+    //     validateFields($(this).closest('form'));
+    // });
 
-    $('.validate-required, .validate-email').on('blur change', function() {
-        validateFields($(this).closest('form'));
-    });
+    // $('form').each(function() {
+    //     if ($(this).find('.form-error').length) {
+    //         $(this).attr('original-error', $(this).find('.form-error').text());
+    //     }
+    // });
 
-    $('form').each(function() {
-        if ($(this).find('.form-error').length) {
-            $(this).attr('original-error', $(this).find('.form-error').text());
-        }
-    });
+    // function validateFields(form) {
+    //         var name, error, originalErrorMessage;
 
-    function validateFields(form) {
-            var name, error, originalErrorMessage;
+    //         $(form).find('.validate-required[type="checkbox"]').each(function() {
+    //             if (!$('[name="' + $(this).attr('name') + '"]:checked').length) {
+    //                 error = 1;
+    //                 name = $(this).attr('name').replace('[]', '');
+    //                 form.find('.form-error').text('Please tick at least one ' + name + ' box.');
+    //             }
+    //         });
 
-            $(form).find('.validate-required[type="checkbox"]').each(function() {
-                if (!$('[name="' + $(this).attr('name') + '"]:checked').length) {
-                    error = 1;
-                    name = $(this).attr('name').replace('[]', '');
-                    form.find('.form-error').text('Please tick at least one ' + name + ' box.');
-                }
-            });
+    //         $(form).find('.validate-required').each(function() {
+    //             if ($(this).val() === '') {
+    //                 $(this).addClass('field-error');
+    //                 error = 1;
+    //             } else {
+    //                 $(this).removeClass('field-error');
+    //             }
+    //         });
 
-            $(form).find('.validate-required').each(function() {
-                if ($(this).val() === '') {
-                    $(this).addClass('field-error');
-                    error = 1;
-                } else {
-                    $(this).removeClass('field-error');
-                }
-            });
+    //         $(form).find('.validate-email').each(function() {
+    //             if (!(/(.+)@(.+){2,}\.(.+){2,}/.test($(this).val()))) {
+    //                 $(this).addClass('field-error');
+    //                 error = 1;
+    //             } else {
+    //                 $(this).removeClass('field-error');
+    //             }
+    //         });
 
-            $(form).find('.validate-email').each(function() {
-                if (!(/(.+)@(.+){2,}\.(.+){2,}/.test($(this).val()))) {
-                    $(this).addClass('field-error');
-                    error = 1;
-                } else {
-                    $(this).removeClass('field-error');
-                }
-            });
+    //         if (!form.find('.field-error').length) {
+    //             form.find('.form-error').fadeOut(1000);
+    //         }
 
-            if (!form.find('.field-error').length) {
-                form.find('.form-error').fadeOut(1000);
-            }
-
-            return error;
-        }
+    //         return error;
+    //     }
 
     //
     //    
@@ -978,18 +1027,18 @@ $(document).ready(function() {
 
 
     // Get referrer from URL string 
-    if (getURLParameter("ref")) {
-        $('form.form-email').append('<input type="text" name="referrer" class="hidden" value="' + getURLParameter("ref") + '"/>');
-    }
+    // if (getURLParameter("ref")) {
+    //     $('form.form-email').append('<input type="text" name="referrer" class="hidden" value="' + getURLParameter("ref") + '"/>');
+    // }
 
-    function getURLParameter(name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
-    }
+    // function getURLParameter(name) {
+    //     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+    // }
 
     // Disable parallax on mobile
 
     if ((/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
-        $('section').removeClass('parallax');
+        
     }
     
     // Disqus Comments
@@ -1032,6 +1081,105 @@ $(window).load(function() {
 
 
 }); 
+
+function openServices() {
+    var modal = document.getElementById("modal-click");
+    modal.click();
+}
+function setEmail() {
+    var name = document.getElementById("formname").value;
+    var email = document.getElementById("formemail").value;
+
+    console.log("Submitting form.")
+    var title = document.getElementById('modal-title');
+    var caption = document.getElementById('form-body');
+    var modal = document.getElementById("modal-click");
+    var modalFooter = document.getElementById('modal-footer');
+
+    console.log("Subscribing" + name);
+
+    $.ajax({
+        type: 'post',
+        url: 'https://richmusicltd.com/app/reality_sub.php',
+        data: {
+            "name": name,
+            "email": email
+        },
+        success: function( data ) {
+                title.innerHTML= 'Thank you for subscribing!';
+                caption.style.display = "none";
+                modalFooter.style.display = "none";
+                modal.click();
+
+                setTimeout(function() {
+                    modal.click();
+                }, 2000)
+        },
+        error: function(data) {
+            title.innerHTML= 'An error took place.';
+            caption.style.display = "none";
+            modalFooter.style.display = "none";
+            modal.click();
+
+            setTimeout(function() {
+                modal.click();
+            }, 2000)
+            console.log(data);
+        }
+    });
+
+
+
+
+} 
+function setEmailSub() {
+
+    var name = document.getElementById("page_name").value;
+    var email = document.getElementById("page_email").value;
+
+
+    var title = document.getElementById('modal-title');
+    var caption = document.getElementById('form-body');
+    var modal = document.getElementById("modal-click");
+    var modalFooter = document.getElementById('modal-footer');
+
+    console.log("Subscribing" + name);
+
+    $.ajax({
+        type: 'post',
+        url: 'https://richmusicltd.com/app/reality_sub.php',
+        data: {
+            "name": name,
+            "email": email
+        },
+        success: function( data ) {
+                title.innerHTML= 'Thank you for subscribing!';
+                caption.style.display = "none";
+                modalFooter.style.display = "none";
+                
+                setTimeout(function() {
+                    modal.click();
+                }, 2000)
+        },
+        error: function(data) {
+            title.innerHTML= 'An error took place.';
+            caption.style.display = "none";
+            modalFooter.style.display = "none";
+           
+            setTimeout(function() {
+                modal.click();
+            }, 2000)
+            console.log(data);
+        }
+    });
+
+
+
+}
+
+
+
+
 function updateNav() {
 
     var scrollY = mr_scrollTop;
@@ -1289,43 +1437,43 @@ initializeMaps();
 
 // Prepare Signup Form - It is used to retrieve form details from an iframe Mail Chimp or Campaign Monitor form.
 
-function prepareSignup(iFrame){
-    var form   = jQuery('<form />'),
-        div    = jQuery('<div />'),
-        action;
+// function prepareSignup(iFrame){
+//     var form   = jQuery('<form />'),
+//         div    = jQuery('<div />'),
+//         action;
 
-    jQuery(div).html(iFrame.attr('srcdoc'));
-    action = jQuery(div).find('form').attr('action');
-
-
-
-    // Alter action for a Mail Chimp-compatible ajax request url.
-    if(/list-manage\.com/.test(action)){
-       action = action.replace('/post?', '/post-json?') + "&c=?";
-       if(action.substr(0,2) == "//"){
-           action = 'http:' + action;
-       }
-    }
-
-    // Alter action for a Campaign Monitor-compatible ajax request url.
-    if(/createsend\.com/.test(action)){
-       action = action + '?callback=?';
-    }
+//     jQuery(div).html(iFrame.attr('srcdoc'));
+//     action = jQuery(div).find('form').attr('action');
 
 
-    // Set action on the form
-    form.attr('action', action);
 
-    // Clone form input fields from 
-    jQuery(div).find('input, select, textarea').not('input[type="submit"]').each(function(){
-        jQuery(this).clone().appendTo(form);
+//     // Alter action for a Mail Chimp-compatible ajax request url.
+//     if(/list-manage\.com/.test(action)){
+//        action = action.replace('/post?', '/post-json?') + "&c=?";
+//        if(action.substr(0,2) == "//"){
+//            action = 'http:' + action;
+//        }
+//     }
 
-    });
+//     // Alter action for a Campaign Monitor-compatible ajax request url.
+//     if(/createsend\.com/.test(action)){
+//        action = action + '?callback=?';
+//     }
 
-    return form;
+
+//     // Set action on the form
+//     form.attr('action', action);
+
+//     // Clone form input fields from 
+//     jQuery(div).find('input, select, textarea').not('input[type="submit"]').each(function(){
+//         jQuery(this).clone().appendTo(form);
+
+//     });
+
+//     return form;
         
 
-}
+// }
 
 
 

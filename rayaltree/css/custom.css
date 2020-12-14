@@ -1,0 +1,98 @@
+/****** PLACE YOUR CUSTOM STYLES HERE ******/
+.m20 {
+    margin: 20px;
+}
+.bg-black {
+    background-color: black;
+}
+.border15{
+    border-radius: 15px;
+}
+.margin-15{
+    padding: 40px 20px;
+}
+.text-center{
+    text-align: center;
+}
+
+.header-podcast {
+    text-align: left;
+    padding: 15px;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.podcast-description {
+    color: rgba(255, 255, 255, 0.75);
+    padding-top: 0px;
+    margin: 0px;
+    text-align: left;
+    padding-left: 15px;
+}
+
+.podcast-details {
+    color: #dcdcdc;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin: 0px;
+    text-align: left;
+    padding-left: 15px;
+    font-size: 16px;
+    font-weight: 400;
+}
+.centered-rich{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+.img-center {margin:0 auto;}
+.padding-20 {
+    padding-top: 20px;
+}
+.margin-tb-5{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.margin-t15-b25 {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    float: left;
+}
+.margin-lft-15{
+    margin-left: 15px;
+}
+.episodes-title {
+    text-align: center;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.bold-white{
+    font-weight: bold;
+    color: white;
+}
+
+.margin-top-15{
+    margin-top:15px;
+}
+.white {
+    color: #ffffff;
+}
+.padding-all-20 {
+    padding: 20px;
+}
+
+.padding-top-5 {
+    padding-top: 5%;
+}
+
+.top5{
+    top: 5%;
+}
+.modal-img {
+    max-width: 55%;
+    padding: 15px;
+}

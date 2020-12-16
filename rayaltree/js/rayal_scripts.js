@@ -8,10 +8,6 @@ var mr_firstSectionHeight,
     mr_floatingProjectSections,
     mr_scrollTop = 0;
 
-
-
-
-
 $(document).ready(function() { 
     "use strict";
 
@@ -52,8 +48,13 @@ window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
 
+
+
+
+
+
     var form = $('form#submission-form'),
-    url = 'https://script.google.com/macros/s/AKfycbx_6zACj4BsRiH4a7wzi3jYC_yj8abzmWPFYVaFOgJ8Zxdl_e_A/exec';
+    url = 'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbx_6zACj4BsRiH4a7wzi3jYC_yj8abzmWPFYVaFOgJ8Zxdl_e_A/exec';
 
 $('#clear-signature').on('click', function(e) {
     e.preventDefault();
@@ -71,17 +72,17 @@ $('#submit-form').on('click', function(e) {
 
   var jqxhr = $.ajax({
     url: url,
-    method: "GET",
+    method: "POST",
     dataType: "json",
     data: form.serializeObject()
   }).success(function() {
-    $("#form-container").css("top", "40%");
-    $("#form-container").html( "<h3>¡Gracias por tu envío!</h3>" );
+    $("#submission-form").css("top", "40%");
+    $("#submission-form").html( "<h3>Your Submission has been recorded. Refresh the page to start a new form.</h3>" );
     
 
   }).error(function() {
     $("#form-container").css("top", "40%");
-    $("#form-container").html( "<h3>Set up backend to receive submissions. </h3>" );
+    $("#submission-form").html( "<h3>There was an error with your Submission. Please contact your adminstrator</h3>" );
   });
 })
     

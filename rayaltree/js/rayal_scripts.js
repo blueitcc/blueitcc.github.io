@@ -49,20 +49,35 @@ $('#submit-form').on('click', function(e) {
   e.preventDefault();
 
     var signatureData = signaturePad.toDataURL();
-  	$('#signature').val(signatureData);
-
+    $('#signature').val(signatureData);
+    $("#submit-form").removeClass("btn-success").addClass("btn-secondary"); 
+    $('#submit-form').attr("disabled",true);
+    $('#submit-form').html("Submitting...");
   var jqxhr = $.ajax({
     url: url,
     method: "POST",
     dataType: "application/x-www-form-urlencoded",
     data: form.serializeObject()
-  }).success(function() {
+  }).success(function(e) {
+    console.log(e);
+    if(e.status === 200){
+      $("#submission-form").html( '<h3 class="text-center">Your Submission has been recorded. Refresh the page to start a new form.</h3>' );
 
-    $("#submission-form").html( '<h3 class="text-center">Your Submission has been recorded. Refresh the page to start a new form.</h3>' );
+    } else {
+          $("#submission-form").html( '<h3 class="text-center">Error took place.</h3>' );
+    }
+    
     
 
-  }).error(function() {
-    $("#submission-form").html( '<h3 class="text-center">Your Submission has been recorded. Refresh the page to start a new form.</h3>' );
+  }).error(function(e) {
+    console.log(e);
+    if(e.status === 200){
+      $("#submission-form").html( '<h3 class="text-center">Your Submission has been recorded. Refresh the page to start a new form.</h3>' );
+
+    } else {
+          $("#submission-form").html( '<h3 class="text-center">Error took place.</h3>' );
+    }
+
   });
 })
     
